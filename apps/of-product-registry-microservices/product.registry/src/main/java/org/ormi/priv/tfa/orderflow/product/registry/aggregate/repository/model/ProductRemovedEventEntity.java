@@ -10,11 +10,11 @@ public class ProductRemovedEventEntity extends ProductRegistryEventEntity {
   /**
    * Payload for the event.
    */
-  public static class Payload {
+  public static record Payload() {
     /**
      * The id of the product.
      */
-    public String productId;
+    static String productId;
   }
 
   /**

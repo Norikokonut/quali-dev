@@ -10,19 +10,19 @@ public class ProductRegisteredEventEntity extends ProductRegistryEventEntity {
   /**
    * Payload for the event.
    */
-  public static class Payload {
+  public static record Payload() {
     /**
      * The id of the product.
      */
-    public String productId;
+    static String productId;
     /**
      * The name of the product.
      */
-    public String name;
+    static String name;
     /**
      * The description of the product.
      */
-    public String productDescription;
+    static String productDescription;
   }
 
   /**
