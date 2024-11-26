@@ -1,6 +1,10 @@
 package org.ormi.priv.tfa.orderflow.product.registry.aggregate.repository.model;
 
+/**
+ * Product registered event entity.
+ */
 public class ProductRegisteredEventEntity extends ProductRegistryEventEntity {
+  /** The event type. */
   static final String EVENT_TYPE = "ProductRegistered";
 
   /**
@@ -26,6 +30,12 @@ public class ProductRegisteredEventEntity extends ProductRegistryEventEntity {
    */
   public Payload payload;
 
+
+  /**
+   * Get the event type.
+   * 
+   * @return The event type.
+   */
   @Override
   public String getEventType() {
     return EVENT_TYPE;

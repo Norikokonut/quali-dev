@@ -25,14 +25,8 @@ public interface ProductRegistryEventEntityMapper {
   @Mapping(target = "payload", source = "payload", qualifiedByName = "productRegisteredEventPayloadToEntity")
   ProductRegisteredEventEntity toEntity(ProductRegistered evt);
 
-  @Mapping(target = "id", source = "eventId", qualifiedByName = "toEventId")
-  @Mapping(target = "eventType", ignore = true)
-  @Mapping(target = "aggregateId", source = "aggregateRootId")
-  @Mapping(target = "version", source = "version")
-  @Mapping(target = "timestamp", source = "timestamp")
-  @Mapping(target = "payload", source = "payload", qualifiedByName = "productRegisteredEventPayloadToEvent")
-  ProductRegistered toEvent(ProductRegisteredEventEntity entity);
-
+  @Mapping(target = "id"
+ * collection: product_registry_events
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "eventId", source = "id", qualifiedByName = "eventIdToString")
   @Mapping(target = "eventType", source = "eventType")

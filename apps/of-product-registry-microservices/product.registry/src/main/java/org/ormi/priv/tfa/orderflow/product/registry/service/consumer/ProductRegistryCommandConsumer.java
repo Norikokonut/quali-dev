@@ -17,12 +17,17 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+/**
+ * The product registry command consumer.
+ */
 @ApplicationScoped
 public class ProductRegistryCommandConsumer {
 
+  /** The product registry service */
   @Inject
   private ProductRegistryService productRegistryService;
 
+  /** The product registry event producer */
   @Inject
   private ProductRegistryEventEmitter eventProducer;
 

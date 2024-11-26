@@ -8,18 +8,18 @@ import org.junit.jupiter.api.Test;
 import org.ormi.priv.tfa.orderflow.lib.publishedlanguage.valueobject.ProductId;
 
 /**
- * Classe de test pour la classe Product.
+ * Test class for the Product class.
  */
 public class ProductTest {
 
   /**
-   * Classe de test pour la méthode equals.
+   * Test class for the equals method.
    */
   @Nested
   public class Equals {
 
     /**
-     * Test de la méthode equals avec des produits ayant le même id.
+     * Test of the equals method with products having the same id.
      */
     @Test
     public void it_should_returnTrue_when_comparingProductsWithSameId() {
@@ -36,7 +36,7 @@ public class ProductTest {
     }
 
     /**
-     * Test de la méthode equals avec des produits ayant des id différents.
+     * Test of the equals method with products having different ids.
      */
     @Test
     public void it_should_returnFalse_when_comparingProductsWithDifferentId() {
@@ -55,13 +55,13 @@ public class ProductTest {
   }
 
   /**
-   * Classe de test pour la méthode hashCode.
+   * Test class for the hashCode method.
    */
   @Nested
   public class HashCode {
 
     /**
-     * Test de la méthode hashCode avec des produits ayant le même id.
+     * Test of the hashCode method with products having the same id.
      */
     @Test
     public void it_should_returnSameHashCode_when_comparingProductsWithSameId() {
@@ -79,7 +79,7 @@ public class ProductTest {
     }
 
     /**
-     * Test de la méthode hashCode avec des produits ayant des id différents.
+     * Test of the hashCode method with products having different ids.
      */
     @Test
     public void it_should_returnDifferentHashCode_when_comparingProductsWithDifferentId() {
@@ -99,13 +99,13 @@ public class ProductTest {
   }
 
   /**
-   * Classe de test pour la méthode toString.
+   * Test class for the toString method.
    */
   @Nested
   public class ToString {
 
     /**
-     * Test de la méthode toString de la classe Product.
+     * Test of the toString method.
      */
     @Test
     public void it_should_returnStringRepresentationOfProduct() {

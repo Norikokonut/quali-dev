@@ -59,6 +59,9 @@ public class Product {
     return productDescription;
   }
 
+  /**
+   * The string representation of a product
+   */
   @Override
   public String toString() {
     return "Product{" +
@@ -68,6 +71,12 @@ public class Product {
       '}';
   }
 
+  /**
+   * Two products are equal if they have the same product identifier
+   * 
+   * @param o - the object to compare
+   * @return true if the products are equal, false otherwise
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -77,6 +86,11 @@ public class Product {
     return productId.equals(other.productId);
   }
 
+  /**
+   * The hash code of a product is based on the product identifier
+   * 
+   * @return the hash code
+   */
   @Override
   public int hashCode() {
     return productId.hashCode();

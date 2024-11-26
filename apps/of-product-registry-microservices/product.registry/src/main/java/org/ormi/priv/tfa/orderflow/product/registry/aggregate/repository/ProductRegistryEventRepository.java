@@ -10,16 +10,25 @@ import org.ormi.priv.tfa.orderflow.product.registry.aggregate.repository.model.P
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import io.quarkus.panache.common.Sort;
 
+/**
+ * The product registry event repository.
+ */
 @ApplicationScoped
 public class ProductRegistryEventRepository
     implements EventStore<ProductRegistryEventEntity>,
     PanacheMongoRepository<ProductRegistryEventEntity> {
 
+  /**
+   * Save the event.
+   */
   @Override
   public void saveEvent(ProductRegistryEventEntity event) {
     persist(event);
   }
 
+  /**
+   * Find the events by aggregate root id and starting version.
+   */
   @Override
   public List<ProductRegistryEventEntity> findEventsByAggregateRootIdAndStartingVersion(String aggregateRootId,
       long startingVersion) {
