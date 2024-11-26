@@ -18,6 +18,9 @@ import io.smallrye.reactive.messaging.pulsar.PulsarClientService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import org.ormi.priv.tfa.orderflow.product.registry.service.producer.EventProducerException;
+import org.ormi.priv.tfa.orderflow.product.registry.service.producer.ProducerCloseException;
+
 /**
  * The product registry event producer.
  * Produces events to the product registry event channel so it can be watched on
@@ -98,13 +101,13 @@ public class ProductRegistryEventEmitter {
               .sendAsync()
               .whenComplete((msgId, ex) -> {
                 if (ex != null) {
-                  throw new RuntimeException("Failed to produce event for correlation id: " + correlationId, ex);
+                  throw new EventProducerException("Failed to produce event for correlation id: " + correlationId, ex);
                 }
                 Log.debug(String.format("Sinked event with correlation id{%s} in msg{%s}", correlationId, msgId));
                 try {
                   producer.close();
                 } catch (PulsarClientException e) {
-                  throw new RuntimeException("Failed to close producer", e);
+                  throw new ProducerCloseException("Failed to close producer", e);
                 }
               });
         });
@@ -127,7 +130,7 @@ public class ProductRegistryEventEmitter {
         .topic(topic)
         .createAsync()
         .exceptionally(ex -> {
-          throw new RuntimeException("Failed to create producer for correlation id: " + correlationId, ex);
+          throw new EventProducerException("Failed to create producer for correlation id: " + correlationId, ex);
         });
   }
 }
