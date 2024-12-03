@@ -22,9 +22,18 @@ public class ProductUpdatedEventEntity extends ProductRegistryEventEntity {
   }
 
   /**
-   * The payload for the event.
-   */
-  public Payload payload;
+     * The payload for the event.
+     */
+    private Payload payload;
+
+    /**
+     * Getter for the payload.
+     *
+     * @return the payload
+     */
+    public Payload getPayload() {
+        return payload;
+    }
 
 
   @Override

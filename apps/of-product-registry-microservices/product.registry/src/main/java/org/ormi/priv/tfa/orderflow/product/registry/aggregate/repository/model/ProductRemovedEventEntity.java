@@ -18,9 +18,18 @@ public class ProductRemovedEventEntity extends ProductRegistryEventEntity {
   }
 
   /**
-   * The payload for the event.
-   */
-  public Payload payload;
+     * The payload for the event.
+     */
+    private Payload payload;
+
+    /**
+     * Getter for the payload.
+     *
+     * @return the payload
+     */
+    public Payload getPayload() {
+        return payload;
+    }
 
   @Override
   public String getEventType() {
