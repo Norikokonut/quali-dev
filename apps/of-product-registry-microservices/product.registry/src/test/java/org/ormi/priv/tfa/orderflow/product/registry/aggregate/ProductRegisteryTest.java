@@ -1,10 +1,13 @@
 package org.ormi.priv.tfa.orderflow.product.registry.aggregate;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.ormi.priv.tfa.orderflow.lib.publishedlanguage.command.ProductRegistryCommand;
+import org.ormi.priv.tfa.orderflow.lib.publishedlanguage.command.RegisterProduct;
+import org.ormi.priv.tfa.orderflow.lib.publishedlanguage.command.RemoveProduct;
+import org.ormi.priv.tfa.orderflow.lib.publishedlanguage.command.UpdateProduct;
 import org.ormi.priv.tfa.orderflow.lib.publishedlanguage.valueobject.ProductId;
 import org.ormi.priv.tfa.orderflow.product.registry.aggregate.service.ProductRegistryService;
 
@@ -25,27 +28,29 @@ public class ProductRegisteryTest {
             ProductRegistry productRegistry = new ProductRegistry(new ProductRegistryService());
             ProductId productId = new ProductId();
             Product product = new Product(productId, "Test 1", "A test product");
-            ProductRegistryCommand command = new ProductRegistryCommand(productId, product);
-            
-            // When
-            productRegistry.handle(command);
-            
+            Product updatedProduct = new Product(productId, "Updated Test", "Updated product description");
+
+            // 1. Tester l'enregistrement
+            RegisterProduct registerCommand = new RegisterProduct(product.getName(), product.getProductDescription());
+            productRegistry.handle(registerCommand).await().indefinitely();
+
             // Then
             assertTrue(productRegistry.hasProductWithId(productId));
-            assertEquals(product, productRegistry.getProduct(productId));
-            
-            // When
-            productRegistry.handle(command);
-            
+            assertTrue(productRegistry.hasProduct(new Product(productId, "ProductName", "ProductDescription")));
+
+            // 2. Tester la mise à jour
+            UpdateProduct updateCommand = new UpdateProduct(productId, updatedProduct.getName(), updatedProduct.getProductDescription());
+            productRegistry.handle(updateCommand).await().indefinitely();
+
             // Then
-            assertEquals(product, productRegistry.getProduct(productId));
-            
-            // When
-            productRegistry.handle(new ProductRegistryCommand(productId, null));
-            
+            assertTrue(productRegistry.hasProductWithId(productId));
+
+            // 3. Tester la suppression
+            RemoveProduct removeCommand = new RemoveProduct(productId);
+            productRegistry.handle(removeCommand).await().indefinitely();
+
             // Then
-            assertFalse(productRegistry.hasProduct(productId));
+            assertFalse(productRegistry.hasProductWithId(productId));
         }
-        
     }
 }
