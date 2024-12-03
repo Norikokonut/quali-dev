@@ -1,7 +1,9 @@
 package org.ormi.priv.tfa.orderflow.product.registry.aggregate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ public class ProductRegisteryTest {
          *  Le produit doit être supprimé
          */
         @Test
-        public void it_should_handleValidProductRegistryCommand() {
+        public void it_should_handleValidAndInvalidProductRegistryCommands() {
             // Given
             ProductRegistry productRegistry = new ProductRegistry(new ProductRegistryService());
             ProductId productId = new ProductId();
@@ -36,7 +38,7 @@ public class ProductRegisteryTest {
 
             // Then
             assertTrue(productRegistry.hasProductWithId(productId));
-            assertTrue(productRegistry.hasProduct(new Product(productId, "ProductName", "ProductDescription")));
+            assertTrue(productRegistry.hasProduct(new Product(productId, "Test 1", "A test product")));
 
             // 2. Tester la mise à jour
             UpdateProduct updateCommand = new UpdateProduct(productId, updatedProduct.getName(), updatedProduct.getProductDescription());
@@ -44,6 +46,7 @@ public class ProductRegisteryTest {
 
             // Then
             assertTrue(productRegistry.hasProductWithId(productId));
+            assertTrue(productRegistry.hasProduct(new Product(productId, "Updated Test", "Updated product description")));
 
             // 3. Tester la suppression
             RemoveProduct removeCommand = new RemoveProduct(productId);
@@ -51,6 +54,14 @@ public class ProductRegisteryTest {
 
             // Then
             assertFalse(productRegistry.hasProductWithId(productId));
+
+            // 4. Tester une commande nulle
+            try {
+                productRegistry.handle(null).await().indefinitely();
+                fail("Expected an IllegalArgumentException to be thrown for a null command");
+            } catch (IllegalArgumentException e) {
+                assertEquals("Unhandled command type", e.getMessage());
+            }
         }
     }
 }
